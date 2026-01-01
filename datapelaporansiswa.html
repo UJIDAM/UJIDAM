@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Data Siswa Per Kelas</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Tahoma, sans-serif;
+      background: #f1f8f4;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card {
+      background: #ffffff;
+      width: 100%;
+      max-width: 700px;
+      padding: 25px 30px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+      border-top: 6px solid #1b5e20;
+    }
+
+    h3 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #1b5e20;
+    }
+
+    label {
+      font-size: 14px;
+      font-weight: 600;
+      color: #2e7d32;
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    select {
+      width: 220px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      border: 1px solid #c8e6c9;
+      font-size: 14px;
+      background: #f9fffb;
+      outline: none;
+      margin-bottom: 15px;
+    }
+
+    select:focus {
+      border-color: #2e7d32;
+      box-shadow: 0 0 0 2px rgba(46,125,50,0.15);
+    }
+
+    .table-wrapper {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+
+    thead {
+      background: #2e7d32;
+      color: white;
+    }
+
+    th, td {
+      padding: 10px 12px;
+      border-bottom: 1px solid #e0e0e0;
+      font-size: 14px;
+    }
+
+    th {
+      text-align: left;
+      font-weight: 600;
+    }
+
+    tbody tr:nth-child(even) {
+      background: #f7fbf8;
+    }
+
+    tbody tr:hover {
+      background: #e8f5e9;
+    }
+
+    td:last-child {
+      font-weight: bold;
+      color: #1b5e20;
+    }
+
+    .empty {
+      text-align: center;
+      color: #888;
+      font-style: italic;
+    }
+
+    @media (max-width: 600px) {
+      select {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="card">
+  <h3>Data Siswa Per Kelas</h3>
+
+  <label>Pilih Kelas</label>
+  <select id="kelas">
+    <option value="">-- Pilih Kelas --</option>
+    <option value="KELAS_7A">7A</option>
+    <option value="KELAS_7B">7B</option>
+    <option value="KELAS_7C">7C</option>
+    <option value="KELAS_7D">7D</option>
+    <option value="KELAS_7E">7E</option>
+    <option value="KELAS_8A">8A</option>
+    <option value="KELAS_8B">8B</option>
+    <option value="KELAS_8C">8C</option>
+    <option value="KELAS_9A">9A</option>
+    <option value="KELAS_9B">9B</option>
+    <option value="KELAS_9C">9C</option>
+  </select>
+
+  <div class="table-wrapper">
+    <table id="tabel">
+      <thead>
+        <tr>
+          <th>No</th>
+          <th>Nama Siswa</th>
+          <th>Poin</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+const URL = "https://script.google.com/macros/s/AKfycbz0lb1Zf4n_NL2bM7gptsuMi7ma1siJ59fDGHDEW3YWpZTRBKbQxHyURa00ikyQJFac/exec";
+const kelas = document.getElementById("kelas");
+const tbody = document.querySelector("#tabel tbody");
+
+kelas.addEventListener("change", () => {
+  tbody.innerHTML = "";
+
+  if (!kelas.value) return;
+
+  fetch(URL + "?action=kelasData&kelas=" + kelas.value)
+    .then(r => r.json())
+    .then(data => {
+      if (data.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="3" class="empty">Tidak ada data</td>
+          </tr>`;
+        return;
+      }
+
+      data.forEach((s, i) => {
+        tbody.innerHTML += `
+          <tr>
+            <td>${i + 1}</td>
+            <td>${s.nama}</td>
+            <td>${s.poin}</td>
+          </tr>
+        `;
+      });
+    });
+});
+</script>
+
+</body>
+</html>
