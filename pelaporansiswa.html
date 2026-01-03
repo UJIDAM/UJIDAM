@@ -2,52 +2,57 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Form Pelanggaran Siswa</title>
 
   <style>
+    /* ===== FIX UTAMA BOX MODEL ===== */
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
       font-family: "Segoe UI", Tahoma, sans-serif;
       background: #f1f8f4;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      padding: 16px;
     }
 
     .card {
       background: #ffffff;
       width: 100%;
-      max-width: 800px;
-      padding: 25px 30px;
-      border-radius: 12px;
+      max-width: 720px;
+      margin: auto;
+      padding: 22px;
+      border-radius: 14px;
       box-shadow: 0 8px 20px rgba(0,0,0,0.08);
       border-top: 6px solid #1b5e20;
     }
 
     h3 {
       text-align: center;
-      margin-bottom: 25px;
+      margin-bottom: 22px;
       color: #1b5e20;
+      font-size: 22px;
     }
 
     label {
-      font-size: 14px;
+      font-size: 16px;
       font-weight: 600;
       color: #2e7d32;
-      display: block;
       margin-bottom: 6px;
+      display: block;
     }
 
     select,
     input {
       width: 100%;
-      padding: 10px 12px;
-      border-radius: 8px;
+      padding: 14px;
+      border-radius: 10px;
       border: 1px solid #c8e6c9;
-      font-size: 14px;
-      outline: none;
+      font-size: 16px;
       background: #f9fffb;
+      outline: none;
     }
 
     select:focus,
@@ -58,44 +63,51 @@
 
     input[readonly],
     input:disabled {
-      width: 94%;
-      padding: 10px 12px;
-      border-radius: 8px;
-      font-size: 14px;
       background: #eeeeee;
       color: #555;
+      font-weight: bold;
+      width: 100%;
     }
 
     .form-group {
-      margin-bottom: 16px;
+      margin-bottom: 18px;
     }
 
     button {
       width: 100%;
-      padding: 12px;
+      padding: 15px;
       border: none;
-      border-radius: 10px;
+      border-radius: 12px;
       background: linear-gradient(135deg, #2e7d32, #1b5e20);
       color: white;
-      font-size: 15px;
+      font-size: 17px;
       font-weight: bold;
       cursor: pointer;
-      transition: 0.2s ease;
-    }
-
-    button:hover {
-      opacity: 0.9;
-      transform: translateY(-1px);
     }
 
     button:active {
-      transform: translateY(0);
+      opacity: 0.9;
     }
 
-    @media (max-width: 800px) {
-      .card {
-        margin: 15px;
-        padding: 20px;
+    /* ===== MODE HP ===== */
+    @media (max-width: 600px) {
+      h3 {
+        font-size: 20px;
+      }
+
+      label {
+        font-size: 15px;
+      }
+
+      select,
+      input {
+        font-size: 16px;
+        padding: 14px;
+      }
+
+      button {
+        font-size: 16px;
+        padding: 14px;
       }
     }
   </style>
@@ -151,8 +163,8 @@
       <label>Poin</label>
       <input type="number" id="poin" readonly disabled>
     </div>
-    <br>
-    <button type="submit">Simpan</button>
+
+    <button type="submit">Simpan Pelanggaran</button>
   </form>
 </div>
 
@@ -177,7 +189,7 @@ fetch(URL + "?action=pelanggaran")
     );
   });
 
-// LOAD SISWA
+// LOAD SISWA BERDASARKAN KELAS
 kelas.addEventListener("change", () => {
   siswa.innerHTML = `<option>-- Pilih Siswa --</option>`;
   if (!kelas.value) return;
@@ -191,13 +203,13 @@ kelas.addEventListener("change", () => {
     });
 });
 
-// AUTO POIN
+// AUTO ISI POIN
 pelanggaran.addEventListener("change", () => {
   const p = pelanggaranData.find(x => x.kode === pelanggaran.value);
   poin.value = p ? p.poin : "";
 });
 
-// SIMPAN
+// SIMPAN DATA
 form.addEventListener("submit", e => {
   e.preventDefault();
 
@@ -219,5 +231,3 @@ form.addEventListener("submit", e => {
 
 </body>
 </html>
-
-
