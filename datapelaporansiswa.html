@@ -2,6 +2,7 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Data Siswa Per Kelas</title>
 
   <style>
@@ -9,76 +10,71 @@
       margin: 0;
       font-family: "Segoe UI", Tahoma, sans-serif;
       background: #f1f8f4;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      padding: 16px;
     }
 
     .card {
       background: #ffffff;
       width: 100%;
-      max-width: 800px;
-      padding: 25px 30px;
-      border-radius: 12px;
+      max-width: 1100px;
+      margin: auto;
+      padding: 20px;
+      border-radius: 14px;
       box-shadow: 0 8px 20px rgba(0,0,0,0.08);
       border-top: 6px solid #1b5e20;
     }
 
     h3 {
       text-align: center;
-      margin-bottom: 20px;
+      margin-bottom: 18px;
       color: #1b5e20;
+      font-size: 22px;
     }
 
     label {
-      font-size: 14px;
+      font-size: 16px;
       font-weight: 600;
       color: #2e7d32;
-      display: block;
       margin-bottom: 6px;
+      display: block;
     }
 
     select {
-      width: 220px;
-      padding: 10px 12px;
-      border-radius: 8px;
+      width: 100%;
+      padding: 14px;
+      border-radius: 10px;
       border: 1px solid #c8e6c9;
-      font-size: 14px;
+      font-size: 16px;
       background: #f9fffb;
-      outline: none;
-      margin-bottom: 15px;
-    }
-
-    select:focus {
-      border-color: #2e7d32;
-      box-shadow: 0 0 0 2px rgba(46,125,50,0.15);
+      margin-bottom: 18px;
     }
 
     .table-wrapper {
       overflow-x: auto;
+      margin-top: 10px;
     }
 
     table {
       width: 100%;
+      min-width: 600px;
       border-collapse: collapse;
-      margin-top: 10px;
     }
 
     thead {
       background: #2e7d32;
-      color: white;
+      color: #fff;
     }
 
     th, td {
-      padding: 10px 12px;
+      padding: 14px 12px;
       border-bottom: 1px solid #e0e0e0;
-      font-size: 14px;
+      font-size: 15px;
     }
 
     th {
       text-align: left;
       font-weight: 600;
+      white-space: nowrap;
     }
 
     tbody tr:nth-child(even) {
@@ -89,20 +85,32 @@
       background: #e8f5e9;
     }
 
-    td:last-child {
+    td:nth-child(3) {
       font-weight: bold;
       color: #1b5e20;
+      text-align: center;
     }
 
     .empty {
       text-align: center;
-      color: #888;
+      color: #777;
       font-style: italic;
+      padding: 20px;
     }
 
+    /* ===== MODE HP ===== */
     @media (max-width: 600px) {
-      select {
-        width: 100%;
+      h3 {
+        font-size: 20px;
+      }
+
+      th, td {
+        font-size: 14px;
+        padding: 12px 10px;
+      }
+
+      .card {
+        padding: 16px;
       }
     }
   </style>
@@ -136,6 +144,7 @@
           <th>No</th>
           <th>Nama Siswa</th>
           <th>Poin</th>
+          <th>Program Bimbingan</th>
         </tr>
       </thead>
       <tbody></tbody>
@@ -157,10 +166,7 @@ kelas.addEventListener("change", () => {
     .then(r => r.json())
     .then(data => {
       if (data.length === 0) {
-        tbody.innerHTML = `
-          <tr>
-            <td colspan="3" class="empty">Tidak ada data</td>
-          </tr>`;
+        tbody.innerHTML = `<tr><td colspan="4" class="empty">Tidak ada data</td></tr>`;
         return;
       }
 
@@ -170,6 +176,7 @@ kelas.addEventListener("change", () => {
             <td>${i + 1}</td>
             <td>${s.nama}</td>
             <td>${s.poin}</td>
+            <td>${s.program}</td>
           </tr>
         `;
       });
@@ -179,10 +186,3 @@ kelas.addEventListener("change", () => {
 
 </body>
 </html>
-
-
-
-
-
-
-
